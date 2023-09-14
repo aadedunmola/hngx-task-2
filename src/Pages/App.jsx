@@ -1,7 +1,6 @@
 import "../Styles/App.scss";
 import Api from "../Endpoints/api";
 import MovieCard from "../Components/movieCard";
-import Search from "../Endpoints/searchBase";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "../Styles/MovieCard.scss";
@@ -19,7 +18,7 @@ function App() {
   useEffect(() => {
     const fetchTop10RatedMovies = async () => {
       try {
-        const res = await Api.get("/top_rated?language=en-US&page=1");
+        const res = await Api.get("/movie/top_rated?language=en-US&page=1");
 
         const top10Movies = res.data.results.slice(0, 10);
         setTopRatedMovies(top10Movies);
@@ -36,7 +35,7 @@ function App() {
   useEffect(() => {
     const fetchNowPlayingMovie = async () => {
       try {
-        const res = await Api.get("/now_playing?language=en-US&page=1");
+        const res = await Api.get("/movie/now_playing?language=en-US&page=1");
 
         setMainMovie(res.data.results.slice(1, 2));
 
@@ -61,8 +60,8 @@ function App() {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const response = await Search.get(
-        `/movie?query=${query}&include_adult=false&language=en-US&page=1`
+      const response = await Api.get(
+        `/search/movie?query=${query}&include_adult=false&language=en-US&page=1`
       );
 
       const movieData = response.data.results.map((movie) => ({
@@ -166,7 +165,7 @@ function App() {
             <h1 className="header">Top Rated Movies:</h1>
             <div className="movie-card">
               {topRatedMovies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
+                <MovieCard key={movie.id} id={movie.id} movie={movie} />
               ))}
             </div>
           </>
