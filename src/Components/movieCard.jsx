@@ -26,6 +26,7 @@ function MovieCard({ movie }) {
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt={movie.title}
             className="poster"
+            data-testid="movie-poster_path"
           />
           <i
             className={`fa fa-heart icon ${isHovered ? "hovered" : ""} ${
@@ -42,12 +43,12 @@ function MovieCard({ movie }) {
             </span>
           )}
         </div>
-        <h5 className="title">{movie.title}</h5>
-        <h6 className="overview">{movie.overview}</h6>
-        <p className="date">
+        <h5 data-testid='movie-title' className="title">{movie.title}</h5>
+        <h6 data-testid='movie-overview' className="overview">{movie.overview}</h6>
+        <p data-testid='movie-release_date' className="date">
           <i>Release Date: {movie.release_date}</i>
         </p>
-        <p className="rate">Rating: {movie.vote_average}/10</p>
+        <p data-testid='movie-rating' className="rate">Rating: {movie.vote_average}/10</p>
       </div>
     </>
   );

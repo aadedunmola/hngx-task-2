@@ -119,7 +119,7 @@ function App() {
         <div className="meg">
           {mainMovie?.map((main) => (
             <>
-              <div key={main.id} style={divStyle}>
+              <div data-testid='movie-poster_path' key={main.id} style={divStyle}>
                 <div className="check">
                   <div className="main-search">
                     <i className="fa fa-search search"></i>
@@ -137,7 +137,7 @@ function App() {
                     </button>
                   </div>
                 </div>
-                <p className="shark">{main.title}</p>
+                <p className="shark" data-testid='movie-title'>{main.title}</p>
               </div>
             </>
           ))}
@@ -155,7 +155,7 @@ function App() {
         {!isLoading && movies.length > 0 ? (
           <>
             <h1 className="header">Searched Movies:</h1>
-            <div className="movie-card">
+            <div data-testid='movie-poster' className="movie-card">
               {movies.map((movie) => (
                 <SearchedMovies key={movie.id} movie={movie} /> 
               ))}

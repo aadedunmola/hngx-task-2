@@ -22,7 +22,7 @@ function SearchedMovies({ movie }) {
   return (
     <div key={movie.id} className="box">
       <div>
-        <img src={movie.poster_path} className="poster" alt={movie.title} />
+        <img src={movie.poster_path} data-testid='movie-poster_path' className="poster" alt={movie.title} />
         <i
           className={`fa fa-heart icon ${isHovered ? "hovered" : ""} ${
             isClicked ? "clicked" : ""
@@ -38,12 +38,12 @@ function SearchedMovies({ movie }) {
           </span>
         )}
       </div>
-      <h2 className="title">{movie.title}</h2>
-      <p className="date">
+      <h2 data-testid='movie-title' className="title">{movie.title}</h2>
+      <p data-testid='movie-release_date' className="date">
         <i>Release Date: {movie.release_date}</i>
       </p>
-      <p className="overview">{movie.overview}</p>
-      <p className="rate">Rathing: {movie.rating}/10</p>
+      <p data-testid='movie-overview' className="overview">{movie.overview}</p>
+      <p data-testid='movie-rating' className="rate">Rathing: {movie.rating}/10</p>
     </div>
   );
 }

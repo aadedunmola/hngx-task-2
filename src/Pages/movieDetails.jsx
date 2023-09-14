@@ -60,6 +60,7 @@ const MovieDetails = () => {
                 src={`https://image.tmdb.org/t/p/w185${movieDetails.poster_path}`}
                 alt={movieDetails.title}
                 className="pic"
+                data-testid='movie-poster_path'
               />
               <i
                 className={`fa fa-heart icon ${isHovered ? "hovered" : ""} ${
@@ -78,12 +79,12 @@ const MovieDetails = () => {
             </div>
             // <div style={divStyle}></div>
           )}
-          <h2 className="title">{movieDetails.title}</h2>
-          <p className="date">
+          <h2 data-testid='movie-title' className="title">{movieDetails.title}</h2>
+          <p data-testid='movie-release_date' className="date">
             <i>Release Date (UTC): {convertToUTC(movieDetails.release_date)}</i>
           </p>
-          <p className="date">Runtime (minutes): {movieDetails.runtime}mins</p>
-          <p className="overviews">{movieDetails.overview}</p>
+          <p data-testid='movie-runtime' className="date">Runtime (minutes): {movieDetails.runtime}mins</p>
+          <p data-testid='movie-overview' className="overviews">{movieDetails.overview}</p>
         </div>
       ) : (
         <div className="loading"></div>
