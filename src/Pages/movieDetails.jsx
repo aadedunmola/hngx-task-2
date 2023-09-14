@@ -20,15 +20,49 @@ const MovieDetails = () => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+  
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    setIsClicked(storedFavorites.includes(movie_id));
+  }, [movie_id]);
 
   const handleClick = () => {
-    setIsClicked(!isClicked);
+    const mediaType = "movie";
+    const mediaId = movie_id;
+    const favorite = !isClicked;
+
+    Api
+      .post(
+        `/account/20428005/favorite`,
+        {
+          media_type: mediaType,
+          media_id: mediaId,
+          favorite: favorite,
+        },
+       
+      )
+      .then((response) => {
+        setIsClicked(favorite);
+        const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        if (favorite) {
+          toast.success("Added to favourites!📍")
+          localStorage.setItem("favorites", JSON.stringify([...storedFavorites, movie_id]));
+        } else {
+          const updatedFavorites = storedFavorites.filter((id) => id !== movie_id);
+          localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+          toast.error("Removed from favorites!")
+        }
+      })
+      .catch((error) => {
+        toast.error("unable to add to favourites");
+        console.error("Error adding to favorites:", error);
+      });
   };
 
   const router = useNavigate();
 
   useEffect(() => {
-    Api.get(`/${movie_id}`)
+    Api.get(`/movie/${movie_id}`)
       .then((res) => {
         setMovieDetails(res.data);
         if (res.data === null) {
@@ -56,6 +90,7 @@ const MovieDetails = () => {
         <div className="whole">
           {movieDetails.poster_path && (
             <div>
+              <h2 data-testid='movie-title' className="title">{movieDetails.title}</h2>
               <img
                 src={`https://image.tmdb.org/t/p/w185${movieDetails.poster_path}`}
                 alt={movieDetails.title}
@@ -77,14 +112,12 @@ const MovieDetails = () => {
                 </span>
               )}
             </div>
-            // <div style={divStyle}></div>
           )}
-          <h2 data-testid='movie-title' className="title">{movieDetails.title}</h2>
+          <p data-testid='movie-overview' className="overviews">{movieDetails.overview}</p>
           <p data-testid='movie-release_date' className="date">
             <i>Release Date (UTC): {convertToUTC(movieDetails.release_date)}</i>
           </p>
           <p data-testid='movie-runtime' className="date">Runtime (minutes): {movieDetails.runtime}mins</p>
-          <p data-testid='movie-overview' className="overviews">{movieDetails.overview}</p>
         </div>
       ) : (
         <div className="loading"></div>

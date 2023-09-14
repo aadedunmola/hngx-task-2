@@ -2,7 +2,7 @@ import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../Styles/MovieCard.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Api from "../Endpoints/api";
 
 function MovieCard({ movie, id }) {
@@ -17,11 +17,15 @@ function MovieCard({ movie, id }) {
     setIsHovered(false);
   };
 
-  const handleClick = () => {
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    setIsClicked(storedFavorites.includes(movie.id));
+  }, [movie.id]);
 
+  const handleClick = () => {
     const mediaType = "movie";
     const mediaId = id;
-    const favorite = !isClicked; // Toggle favorite status
+    const favorite = !isClicked;
 
     Api
       .post(
@@ -30,10 +34,20 @@ function MovieCard({ movie, id }) {
           media_type: mediaType,
           media_id: mediaId,
           favorite: favorite,
-        }
+        },
+       
       )
       .then((response) => {
-        setIsClicked(favorite); // Update the favorite status in your component state
+        setIsClicked(favorite);
+        const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        if (favorite) {
+          toast.success("Added to favourites!📍")
+          localStorage.setItem("favorites", JSON.stringify([...storedFavorites, movie.id]));
+        } else {
+          const updatedFavorites = storedFavorites.filter((id) => id !== movie.id);
+          localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+          toast.error("Removed from favorites!")
+        }
       })
       .catch((error) => {
         toast.error("unable to add to favourites");
@@ -59,7 +73,6 @@ function MovieCard({ movie, id }) {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
-            value={movie.id}
           ></i>
           {isHovered && (
             <span className="tooltip">
@@ -79,8 +92,8 @@ function MovieCard({ movie, id }) {
         <p data-testid="movie-rating" className="rate">
           Rating: {movie.vote_average}/10
         </p>
+        <ToastContainer />
       </div>
-      <ToastContainer />
     </>
   );
 }

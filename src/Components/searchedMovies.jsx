@@ -1,7 +1,11 @@
 import React from "react";
+import { ToastContainer, toast } from "react-toastify";
 import "../Styles/MovieCard.scss";
-import { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { useState, useEffect } from "react";
 import "../Styles/App.scss";
+import Api from "../Endpoints/api";
+
 
 function SearchedMovies({ movie }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -14,9 +18,43 @@ function SearchedMovies({ movie }) {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+  
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    setIsClicked(storedFavorites.includes(movie.id));
+  }, [movie.id]);
 
   const handleClick = () => {
-    setIsClicked(!isClicked);
+    const mediaType = "movie";
+    const mediaId = movie.id;
+    const favorite = !isClicked;
+
+    Api
+      .post(
+        `/account/20428005/favorite`,
+        {
+          media_type: mediaType,
+          media_id: mediaId,
+          favorite: favorite,
+        },
+       
+      )
+      .then((response) => {
+        setIsClicked(favorite);
+        const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        if (favorite) {
+          toast.success("Added to favourites!📍")
+          localStorage.setItem("favorites", JSON.stringify([...storedFavorites, movie.id]));
+        } else {
+          const updatedFavorites = storedFavorites.filter((id) => id !== movie.id);
+          localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+          toast.error("Removed from favorites!")
+        }
+      })
+      .catch((error) => {
+        toast.error("unable to add to favourites");
+        console.error("Error adding to favorites:", error);
+      });
   };
 
   return (
@@ -44,6 +82,7 @@ function SearchedMovies({ movie }) {
       </p>
       <p data-testid='movie-overview' className="overview">{movie.overview}</p>
       <p data-testid='movie-rating' className="rate">Rathing: {movie.rating}/10</p>
+       <ToastContainer />
     </div>
   );
 }
