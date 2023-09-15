@@ -89,7 +89,7 @@ const MovieDetails = () => {
       {movieDetails ? (
         <div className="whole">
           {movieDetails.poster_path && (
-            <div>
+            <div data-testid='movie-card'>
               <h2 data-testid='movie-title' className="title">{movieDetails.title}</h2>
               <img
                 src={`https://image.tmdb.org/t/p/w185${movieDetails.poster_path}`}

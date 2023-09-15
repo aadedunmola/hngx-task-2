@@ -59,7 +59,7 @@ function SearchedMovies({ movie }) {
 
   return (
     <div key={movie.id} className="box">
-      <div>
+      <div data-testid='movie-card'>
         <img src={movie.poster_path} data-testid='movie-poster_path' className="poster" alt={movie.title} />
         <i
           className={`fa fa-heart icon ${isHovered ? "hovered" : ""} ${

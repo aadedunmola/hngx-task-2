@@ -58,7 +58,7 @@ function MovieCard({ movie, id }) {
   return (
     <>
       <div className="box">
-        <div>
+        <div data-testid='movie-card'>
           <img
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt={movie.title}
