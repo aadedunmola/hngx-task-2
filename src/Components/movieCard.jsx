@@ -1,5 +1,6 @@
 import React from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "../Styles/MovieCard.scss";
 import { useState, useEffect } from "react";
@@ -27,26 +28,27 @@ function MovieCard({ movie, id }) {
     const mediaId = id;
     const favorite = !isClicked;
 
-    Api
-      .post(
-        `/account/20428005/favorite`,
-        {
-          media_type: mediaType,
-          media_id: mediaId,
-          favorite: favorite,
-        },
-       
-      )
+    Api.post(`/account/20428005/favorite`, {
+      media_type: mediaType,
+      media_id: mediaId,
+      favorite: favorite,
+    })
       .then((response) => {
         setIsClicked(favorite);
-        const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        const storedFavorites =
+          JSON.parse(localStorage.getItem("favorites")) || [];
         if (favorite) {
-          toast.success("Added to favourites!📍")
-          localStorage.setItem("favorites", JSON.stringify([...storedFavorites, movie.id]));
+          toast.success("Added to favourites!📍");
+          localStorage.setItem(
+            "favorites",
+            JSON.stringify([...storedFavorites, movie.id])
+          );
         } else {
-          const updatedFavorites = storedFavorites.filter((id) => id !== movie.id);
+          const updatedFavorites = storedFavorites.filter(
+            (id) => id !== movie.id
+          );
           localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-          toast.error("Removed from favorites!")
+          toast.error("Removed from favorites!");
         }
       })
       .catch((error) => {
@@ -58,13 +60,15 @@ function MovieCard({ movie, id }) {
   return (
     <>
       <div className="box">
-        <div data-testid='movie-card'>
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            alt={movie.title}
-            className="poster"
-            data-testid="movie-poster_path"
-          />
+        <div data-testid="movie-card">
+          <Link to={`/movies/${movie.id}`}>
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              alt={movie.title}
+              className="poster"
+              data-testid="movie-poster_path"
+            />
+          </Link>
           <i
             className={`fa fa-heart icon ${isHovered ? "hovered" : ""} ${
               isClicked ? "clicked" : ""
@@ -90,7 +94,7 @@ function MovieCard({ movie, id }) {
           <i data-testid="movie-release_date">{movie.release_date}</i>
         </p>
         <p data-testid="movie-rating" className="rate">
-          {movie.vote_average}/10
+          {movie.vote_average}
         </p>
         <ToastContainer />
       </div>

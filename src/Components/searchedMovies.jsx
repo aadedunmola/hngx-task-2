@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect } from "react";
 import "../Styles/App.scss";
 import Api from "../Endpoints/api";
-
+import { Link } from "react-router-dom";
 
 function SearchedMovies({ movie }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -18,7 +18,7 @@ function SearchedMovies({ movie }) {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  
+
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setIsClicked(storedFavorites.includes(movie.id));
@@ -29,26 +29,27 @@ function SearchedMovies({ movie }) {
     const mediaId = movie.id;
     const favorite = !isClicked;
 
-    Api
-      .post(
-        `/account/20428005/favorite`,
-        {
-          media_type: mediaType,
-          media_id: mediaId,
-          favorite: favorite,
-        },
-       
-      )
+    Api.post(`/account/20428005/favorite`, {
+      media_type: mediaType,
+      media_id: mediaId,
+      favorite: favorite,
+    })
       .then((response) => {
         setIsClicked(favorite);
-        const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        const storedFavorites =
+          JSON.parse(localStorage.getItem("favorites")) || [];
         if (favorite) {
-          toast.success("Added to favourites!📍")
-          localStorage.setItem("favorites", JSON.stringify([...storedFavorites, movie.id]));
+          toast.success("Added to favourites!📍");
+          localStorage.setItem(
+            "favorites",
+            JSON.stringify([...storedFavorites, movie.id])
+          );
         } else {
-          const updatedFavorites = storedFavorites.filter((id) => id !== movie.id);
+          const updatedFavorites = storedFavorites.filter(
+            (id) => id !== movie.id
+          );
           localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-          toast.error("Removed from favorites!")
+          toast.error("Removed from favorites!");
         }
       })
       .catch((error) => {
@@ -59,8 +60,15 @@ function SearchedMovies({ movie }) {
 
   return (
     <div key={movie.id} className="box">
-      <div data-testid='movie-card'>
-        <img src={movie.poster_path} data-testid='movie-poster_path' className="poster" alt={movie.title} />
+      <div>
+        <Link to={`/movies/${movie.id}`}>
+          <img
+            src={movie.poster_path}
+            data-testid="movie-poster_path"
+            className="poster"
+            alt={movie.title}
+          />
+        </Link>
         <i
           className={`fa fa-heart icon ${isHovered ? "hovered" : ""} ${
             isClicked ? "clicked" : ""
@@ -76,13 +84,19 @@ function SearchedMovies({ movie }) {
           </span>
         )}
       </div>
-      <h2 data-testid='movie-title' className="title">{movie.title}</h2>
+      <h2 data-testid="movie-title" className="title">
+        {movie.title}
+      </h2>
       <p className="date">
-        <i data-testid='movie-release_date'>{movie.release_date}</i>
+        <i data-testid="movie-release_date">{movie.release_date}</i>
       </p>
-      <p data-testid='movie-overview' className="overview">{movie.overview}</p>
-      <p data-testid='movie-rating' className="rate">{movie.rating}/10</p>
-       <ToastContainer />
+      <p data-testid="movie-overview" className="overview">
+        {movie.overview}
+      </p>
+      <p data-testid="movie-rating" className="rate">
+        {movie.rating}
+      </p>
+      <ToastContainer />
     </div>
   );
 }
