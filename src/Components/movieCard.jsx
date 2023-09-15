@@ -86,11 +86,11 @@ function MovieCard({ movie, id }) {
         <h6 data-testid="movie-overview" className="overview">
           {movie.overview}
         </h6>
-        <p data-testid="movie-release_date" className="date">
-          <i>Release Date: {movie.release_date}</i>
+        <p className="date">
+          <i data-testid="movie-release_date">{movie.release_date}</i>
         </p>
         <p data-testid="movie-rating" className="rate">
-          Rating: {movie.vote_average}/10
+          {movie.vote_average}/10
         </p>
         <ToastContainer />
       </div>

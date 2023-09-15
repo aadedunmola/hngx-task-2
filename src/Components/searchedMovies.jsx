@@ -77,11 +77,11 @@ function SearchedMovies({ movie }) {
         )}
       </div>
       <h2 data-testid='movie-title' className="title">{movie.title}</h2>
-      <p data-testid='movie-release_date' className="date">
-        <i>Release Date: {movie.release_date}</i>
+      <p className="date">
+        <i data-testid='movie-release_date'>{movie.release_date}</i>
       </p>
       <p data-testid='movie-overview' className="overview">{movie.overview}</p>
-      <p data-testid='movie-rating' className="rate">Rathing: {movie.rating}/10</p>
+      <p data-testid='movie-rating' className="rate">{movie.rating}/10</p>
        <ToastContainer />
     </div>
   );

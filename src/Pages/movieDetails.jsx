@@ -114,10 +114,10 @@ const MovieDetails = () => {
             </div>
           )}
           <p data-testid='movie-overview' className="overviews">{movieDetails.overview}</p>
-          <p data-testid='movie-release_date' className="date">
-            <i>Release Date (UTC): {convertToUTC(movieDetails.release_date)}</i>
+          <p className="date">
+            <i data-testid='movie-release_date'> {convertToUTC(movieDetails.release_date)}</i>
           </p>
-          <p data-testid='movie-runtime' className="date">Runtime (minutes): {movieDetails.runtime}mins</p>
+          <p data-testid='movie-runtime' className="date">{movieDetails.runtime}mins</p>
         </div>
       ) : (
         <div className="loading"></div>
