@@ -64,7 +64,7 @@ function SearchedMovies({ movie }) {
         <Link to={`/movies/${movie.id}`}>
           <img
             src={movie.poster_path}
-            data-testid="movie-poster_path"
+            data-testid="movie-poster"
             className="poster"
             alt={movie.title}
           />
@@ -88,14 +88,14 @@ function SearchedMovies({ movie }) {
         {movie.title}
       </h2>
       <p className="date">
-        <i data-testid="movie-release_date">{movie.release_date}</i>
+        <i data-testid="movie-release-date">{movie.release_date}</i>
       </p>
-      <p data-testid="movie-overview" className="overview">
+      {/* <p data-testid="movie-overview" className="overview">
         {movie.overview}
       </p>
       <p data-testid="movie-rating" className="rate">
         {movie.rating}
-      </p>
+      </p> */}
       <ToastContainer />
     </div>
   );

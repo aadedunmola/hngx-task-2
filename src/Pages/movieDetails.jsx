@@ -90,12 +90,11 @@ const MovieDetails = () => {
         <div className="whole">
           {movieDetails.poster_path && (
             <div data-testid='movie-card'>
-              <h2 data-testid='movie-title' className="title">{movieDetails.title}</h2>
               <img
                 src={`https://image.tmdb.org/t/p/w185${movieDetails.poster_path}`}
                 alt={movieDetails.title}
                 className="pic"
-                data-testid='movie-poster_path'
+                data-testid='movie-poster'
               />
               <i
                 className={`fa fa-heart icon ${isHovered ? "hovered" : ""} ${
@@ -113,11 +112,12 @@ const MovieDetails = () => {
               )}
             </div>
           )}
-          <p data-testid='movie-overview' className="overviews">{movieDetails.overview}</p>
+          <h2 data-testid='movie-title' className="title">{movieDetails.title}</h2>
           <p className="date">
-            <i data-testid='movie-release_date'> {convertToUTC(movieDetails.release_date)}</i>
+            <i data-testid='movie-release-date'> {convertToUTC(movieDetails.release_date)}</i>
           </p>
           <p data-testid='movie-runtime' className="date">{movieDetails.runtime}</p>
+          <p data-testid='movie-overview' className="overviews">{movieDetails.overview}</p>
         </div>
       ) : (
         <div className="loading"></div>
