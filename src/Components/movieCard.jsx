@@ -59,8 +59,8 @@ function MovieCard({ movie, id }) {
 
   return (
     <>
-      <div className="box">
-        <div data-testid="movie-card">
+      <div  data-testid="movie-card" className="box">
+        <div>
           <Link to={`/movies/${movie.id}`}>
             <img
               src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}

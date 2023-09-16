@@ -59,7 +59,7 @@ function SearchedMovies({ movie }) {
   };
 
   return (
-    <div key={movie.id} className="box">
+    <div data-testid='movie-card' key={movie.id} className="box">
       <div>
         <Link to={`/movies/${movie.id}`}>
           <img

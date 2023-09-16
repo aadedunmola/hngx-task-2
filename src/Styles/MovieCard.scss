@@ -168,7 +168,7 @@
   margin: 0.7rem 0 0.4rem;
   font-family: "DM Sans";
   font-weight: 500;
-  max-width: 20rem;
+  max-width: 30rem;
   padding-left: 72px;
   color: #fff;
   font-weight: 400;
@@ -176,6 +176,11 @@
   width: 100%;
   font-size: 0.8rem;
   @media (max-width: 1024px) {
-    display: none;
+    max-width: 10rem;
+  }
+  @media (max-width: 500px){
+    display: block;
+    padding-left: 1em;
+    font-size: 0.8rem;
   }
 }

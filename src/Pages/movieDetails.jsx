@@ -87,9 +87,9 @@ const MovieDetails = () => {
   return (
     <div>
       {movieDetails ? (
-        <div className="whole">
+        <div data-testid='movie-card' className="whole">
           {movieDetails.poster_path && (
-            <div data-testid='movie-card'>
+            <div >
               <img
                 src={`https://image.tmdb.org/t/p/w185${movieDetails.poster_path}`}
                 alt={movieDetails.title}

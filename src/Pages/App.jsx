@@ -111,7 +111,7 @@ function App() {
         <div className="meg">
           {mainMovie?.map((main) => (
             <>
-              <div data-testid='movie-poster_path' key={main.id} style={divStyle}>
+              <div data-testid='movie-poster' key={main.id} style={divStyle}>
                 <div className="check">
                   <div className="main-search">
                     <img src="/yagga.png" alt="John wick" className="movie-box" />
@@ -147,7 +147,7 @@ function App() {
         {!isLoading && movies.length > 0 ? (
           <>
             <h1 className="header">Searched Movies:</h1>
-            <div data-testid='movie-card' className="movie-card">
+            <div className="movie-card">
               {movies.map((movie) => (
                 <SearchedMovies key={movie.id} movie={movie} /> 
               ))}
