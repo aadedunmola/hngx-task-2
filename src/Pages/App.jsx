@@ -14,7 +14,7 @@ function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   useEffect(() => {
     const fetchTop10RatedMovies = async () => {
       try {
@@ -35,7 +35,9 @@ function App() {
   useEffect(() => {
     const fetchNowPlayingMovie = async () => {
       try {
-        const res = await Api.get("/search/movie?query=wick&include_adult=false&language=en-US&page=1");
+        const res = await Api.get(
+          "/search/movie?query=wick&include_adult=false&language=en-US&page=1"
+        );
 
         setMainMovie(res.data.results.slice(1, 2));
 
@@ -89,16 +91,14 @@ function App() {
   };
 
   const getDivStyle = () => {
-
     const divStyle = {
       width: "100%",
       height: "600px",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
-      backgroundImage: `url('/wick.png')`
+      backgroundImage: `url('/wick.png')`,
     };
-
 
     return divStyle;
   };
@@ -111,10 +111,14 @@ function App() {
         <div className="meg">
           {mainMovie?.map((main) => (
             <>
-              <div data-testid='movie-poster' key={main.id} style={divStyle}>
+              <div data-testid="movie-poster" key={main.id} style={divStyle}>
                 <div className="check">
                   <div className="main-search">
-                    <img src="/yagga.png" alt="John wick" className="movie-box" />
+                    <img
+                      src="/yagga.png"
+                      alt="John wick"
+                      className="movie-box"
+                    />
                     <input
                       type="text"
                       placeholder="what do you want to watch?"
@@ -124,18 +128,26 @@ function App() {
                       onChange={(e) => setQuery(e.target.value)}
                     />
                     <button onClick={handleSubmit} className="active">
-                      {isLoading ? <div className="loading"></div> : <i className="fa fa-search mee"></i>}{" "}
+                      {isLoading ? (
+                        <div className="loading"></div>
+                      ) : (
+                        <i className="fa fa-search mee"></i>
+                      )}{" "}
                     </button>
                   </div>
                 </div>
-                <p className="shark" data-testid='movie-title'>{main.title}</p>
-                <p data-testid='movie-overview' className="over">{main.overview}</p>
+                <p className="shark" data-testid="movie-title">
+                  {main.title}
+                </p>
+                <p data-testid="movie-overview" className="over">
+                  {main.overview}
+                </p>
               </div>
             </>
           ))}
         </div>
 
-        {isLoading ? (
+        {/* {isLoading ? (
           <div className="state">
             <h6 className="load-state">Loading</h6>
             <div className="load"></div>
@@ -150,6 +162,30 @@ function App() {
             <div className="movie-card">
               {movies.map((movie) => (
                 <SearchedMovies key={movie.id} movie={movie} /> 
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <h1 className="header">Top Rated Movies:</h1>
+            <div className="movie-card">
+              {topRatedMovies.map((movie) => (
+                <MovieCard key={movie.id} id={movie.id} movie={movie} />
+              ))}
+            </div>
+          </>
+        )} */}
+        {isLoading ? (
+          <div className="state">
+            <h6 className="load-state">Loading</h6>
+            <div className="load"></div>
+          </div>
+        ) : movies.length > 0 ? (
+          <>
+            <h1 className="header">Searched Movies:</h1>
+            <div className="movie-card">
+              {movies.map((movie) => (
+                <SearchedMovies key={movie.id} movie={movie} />
               ))}
             </div>
           </>

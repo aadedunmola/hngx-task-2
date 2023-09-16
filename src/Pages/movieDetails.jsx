@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useEffect, useState } from "react";
 import Api from "../Endpoints/api";
 import "../Styles/MovieCard.scss";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +19,7 @@ const MovieDetails = () => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  
+
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setIsClicked(storedFavorites.includes(movie_id));
@@ -31,30 +30,31 @@ const MovieDetails = () => {
     const mediaId = movie_id;
     const favorite = !isClicked;
 
-    Api
-      .post(
-        `/account/20428005/favorite`,
-        {
-          media_type: mediaType,
-          media_id: mediaId,
-          favorite: favorite,
-        },
-       
-      )
+    Api.post(`/account/20428005/favorite`, {
+      media_type: mediaType,
+      media_id: mediaId,
+      favorite: favorite,
+    })
       .then((response) => {
         setIsClicked(favorite);
-        const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        const storedFavorites =
+          JSON.parse(localStorage.getItem("favorites")) || [];
         if (favorite) {
-          toast.success("Added to favourites!📍")
-          localStorage.setItem("favorites", JSON.stringify([...storedFavorites, movie_id]));
+          toast.success("Added to favourites!📍");
+          localStorage.setItem(
+            "favorites",
+            JSON.stringify([...storedFavorites, movie_id])
+          );
         } else {
-          const updatedFavorites = storedFavorites.filter((id) => id !== movie_id);
+          const updatedFavorites = storedFavorites.filter(
+            (id) => id !== movie_id
+          );
           localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-          toast.error("Removed from favorites!")
+          toast.error("Removed from favorites!");
         }
       })
       .catch((error) => {
-        toast.error("unable to add to favourites");
+        toast.error("Unable to add to favorites");
         console.error("Error adding to favorites:", error);
       });
   };
@@ -67,6 +67,7 @@ const MovieDetails = () => {
         setMovieDetails(res.data);
         if (res.data === null) {
           toast.error("Invalid movie ID");
+          router("/");
         }
       })
       .catch((err) => {
@@ -78,29 +79,23 @@ const MovieDetails = () => {
       });
   }, [movie_id]);
 
-  const convertToUTC = (dateString) => {
-    const localDate = new Date(dateString);
-    const utcDate = new Date(localDate.toUTCString());
-    return utcDate.toISOString();
-  };
-
   return (
     <div>
       {movieDetails ? (
-        <div data-testid='movie-card' className="whole">
+        <div data-testid="movie-card" className="whole">
           {movieDetails.poster_path && (
-            <div >
+            <div>
               <img
                 src={`https://image.tmdb.org/t/p/w185${movieDetails.poster_path}`}
                 alt={movieDetails.title}
                 className="pic"
-                data-testid='movie-poster'
+                data-testid="movie-poster"
               />
               <i
                 className={`fa fa-heart icon ${isHovered ? "hovered" : ""} ${
                   isClicked ? "clicked" : ""
                 } `}
-                alt="add movie to favourites"
+                alt="add movie to favorites"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 onClick={handleClick}
@@ -112,12 +107,20 @@ const MovieDetails = () => {
               )}
             </div>
           )}
-          <h2 data-testid='movie-title' className="title">{movieDetails.title}</h2>
+          <h2 data-testid="movie-title" className="title">
+            {movieDetails.title}
+          </h2>
           <p className="date">
-            <i data-testid='movie-release-date'> {movieDetails.release_date}</i>
+            <i data-testid="movie-release-date">
+              {movieDetails.release_date}
+            </i>
           </p>
-          <p data-testid='movie-runtime' className="date">{movieDetails.runtime}</p>
-          <p data-testid='movie-overview' className="overviews">{movieDetails.overview}</p>
+          <p data-testid="movie-runtime" className="date">
+            {movieDetails.runtime} minutes
+          </p>
+          <p data-testid="movie-overview" className="overviews">
+            {movieDetails.overview}
+          </p>
         </div>
       ) : (
         <div className="loading"></div>
