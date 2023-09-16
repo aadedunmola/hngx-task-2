@@ -20,43 +20,10 @@ const MovieDetails = () => {
     setIsHovered(false);
   };
 
-  useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    setIsClicked(storedFavorites.includes(movie_id));
-  }, [movie_id]);
+ 
 
   const handleClick = () => {
-    const mediaType = "movie";
-    const mediaId = movie_id;
-    const favorite = !isClicked;
-
-    Api.post(`/account/20428005/favorite`, {
-      media_type: mediaType,
-      media_id: mediaId,
-      favorite: favorite,
-    })
-      .then((response) => {
-        setIsClicked(favorite);
-        const storedFavorites =
-          JSON.parse(localStorage.getItem("favorites")) || [];
-        if (favorite) {
-          toast.success("Added to favourites!📍");
-          localStorage.setItem(
-            "favorites",
-            JSON.stringify([...storedFavorites, movie_id])
-          );
-        } else {
-          const updatedFavorites = storedFavorites.filter(
-            (id) => id !== movie_id
-          );
-          localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-          toast.error("Removed from favorites!");
-        }
-      })
-      .catch((error) => {
-        toast.error("Unable to add to favorites");
-        console.error("Error adding to favorites:", error);
-      });
+ setIsClicked(!isClicked);
   };
 
   const router = useNavigate();

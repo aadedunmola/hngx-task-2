@@ -36,14 +36,14 @@ function App() {
     const fetchNowPlayingMovie = async () => {
       try {
         const res = await Api.get(
-          "/search/movie?query=wick&include_adult=false&language=en-US&page=1"
+          "/search/movie?query=barbie&include_adult=false&language=en-US&page=1"
         );
 
-        setMainMovie(res.data.results.slice(1, 2));
+        setMainMovie(res.data.results.slice(0, 1));
 
         if (res.data.results && res.data.results.length > 0) {
-          const firstMovie = res.data.results[1];
-          const backdropPath = firstMovie.backdrop_path;
+          const firstMovie = res.data.results[0];
+          const backdropPath = firstMovie.poster_path;
 
           if (backdropPath) {
             setBackgroundImage(
@@ -52,7 +52,7 @@ function App() {
           }
         }
       } catch (error) {
-        toast.error("Falied to Load John wick");
+        toast.error("Falied to Load Barbie");
         console.log(error);
       }
     };
@@ -85,9 +85,7 @@ function App() {
       setIsLoading(false);
       if (!query) {
         toast.error("Please Search for a movie");
-      } else {
-        toast.success("movie found!😎");
-      }
+      } 
     }
   };
 
@@ -98,7 +96,7 @@ function App() {
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
-      backgroundImage: `url('/wick.png')`,
+      backgroundImage: `url('${backgroundImage}')`,
     };
 
     return divStyle;
@@ -139,7 +137,7 @@ function App() {
                   <img src="/men.png" className="movie-box" />
                 </div>
                 <p className="shark" data-testid="movie-title">
-                  John Wick 3 : Parabellum
+                  {main.title}
                 </p>
                 <div className="dimi">
                   <div className="rates">

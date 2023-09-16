@@ -24,35 +24,7 @@ function MovieCard({ movie, id }) {
   }, [movie.id]);
 
   const handleClick = () => {
-    const mediaType = "movie";
-    const mediaId = id;
-    const favorite = !isClicked;
-
-    Api.post(`/account/20428005/favorite`, {
-      media_type: mediaType,
-      media_id: mediaId,
-      favorite: favorite,
-    })
-      .then((response) => {
-        setIsClicked(favorite);
-        const storedFavorites =
-          JSON.parse(localStorage.getItem("favorites")) || [];
-        if (favorite) {
-          localStorage.setItem(
-            "favorites",
-            JSON.stringify([...storedFavorites, movie.id])
-          );
-        } else {
-          const updatedFavorites = storedFavorites.filter(
-            (id) => id !== movie.id
-          );
-          localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-        }
-      })
-      .catch((error) => {
-        toast.error("unable to add to favourites");
-        console.error("Error adding to favorites:", error);
-      });
+    setIsClicked(!isClicked);
   };
 
   const fullReleaseDate = movie.release_date;
@@ -91,9 +63,7 @@ function MovieCard({ movie, id }) {
         <h5 data-testid="movie-title" className="title">
           {movie.title}
         </h5>
-        {/* <h6 data-testid="movie-overview" className="overview">
-          {movie.overview}
-        </h6> */}
+       
         <div className="moses">
           <div className="rates">
             <img src="/im.png" alt="logo" />
@@ -104,12 +74,10 @@ function MovieCard({ movie, id }) {
           </div>
           <div className="rates">
             <img src="/to.png" alt="" />
-            <p className="prees">0%</p>
+            <p className="prees">97%</p>
           </div>
         </div>
-        {/* <p data-testid="movie-rating" className="rate">
-          {movie.vote_average}
-        </p> */}
+       
         <ToastContainer />
       </div>
     </>

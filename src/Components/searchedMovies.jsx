@@ -4,7 +4,6 @@ import "../Styles/MovieCard.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect } from "react";
 import "../Styles/App.scss";
-import Api from "../Endpoints/api";
 import { Link } from "react-router-dom";
 
 function SearchedMovies({ movie }) {
@@ -19,43 +18,10 @@ function SearchedMovies({ movie }) {
     setIsHovered(false);
   };
 
-  useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    setIsClicked(storedFavorites.includes(movie.id));
-  }, [movie.id]);
+  
 
   const handleClick = () => {
-    const mediaType = "movie";
-    const mediaId = movie.id;
-    const favorite = !isClicked;
-
-    Api.post(`/account/20428005/favorite`, {
-      media_type: mediaType,
-      media_id: mediaId,
-      favorite: favorite,
-    })
-      .then((response) => {
-        setIsClicked(favorite);
-        const storedFavorites =
-          JSON.parse(localStorage.getItem("favorites")) || [];
-        if (favorite) {
-          toast.success("Added to favourites!📍");
-          localStorage.setItem(
-            "favorites",
-            JSON.stringify([...storedFavorites, movie.id])
-          );
-        } else {
-          const updatedFavorites = storedFavorites.filter(
-            (id) => id !== movie.id
-          );
-          localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-          toast.error("Removed from favorites!");
-        }
-      })
-      .catch((error) => {
-        toast.error("unable to add to favourites");
-        console.error("Error adding to favorites:", error);
-      });
+    setIsClicked(!isClicked);
   };
 
   const fullReleaseDate = movie.release_date;
@@ -91,9 +57,7 @@ function SearchedMovies({ movie }) {
       <h2 data-testid="movie-title" className="title">
         {movie.title}
       </h2>
-      {/* <p className="date">
-        <i data-testid="movie-release-date">{movie.release_date}</i>
-      </p> */}
+     
       <div className="moses">
           <div className="rates">
             <img src="/im.png" alt="logo" />
@@ -104,15 +68,10 @@ function SearchedMovies({ movie }) {
           </div>
           <div className="rates">
             <img src="/to.png" alt="" />
-            <p className="prees">0%</p>
+            <p className="prees">97%</p>
           </div>
         </div>
-      {/* <p data-testid="movie-overview" className="overview">
-        {movie.overview}
-      </p>
-      <p data-testid="movie-rating" className="rate">
-        {movie.rating}
-      </p> */}
+      
       <ToastContainer />
     </div>
   );
