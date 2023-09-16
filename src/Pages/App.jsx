@@ -35,7 +35,7 @@ function App() {
   useEffect(() => {
     const fetchNowPlayingMovie = async () => {
       try {
-        const res = await Api.get("/movie/now_playing?language=en-US&page=1");
+        const res = await Api.get("/search/movie?query=wick&include_adult=false&language=en-US&page=1");
 
         setMainMovie(res.data.results.slice(1, 2));
 
@@ -50,7 +50,7 @@ function App() {
           }
         }
       } catch (error) {
-        toast.error("Falied to Load the Meg");
+        toast.error("Falied to Load John wick");
         console.log(error);
       }
     };
@@ -89,7 +89,6 @@ function App() {
   };
 
   const getDivStyle = () => {
-    const isMobile = window.innerWidth <= 1024;
 
     const divStyle = {
       width: "100%",
@@ -97,15 +96,9 @@ function App() {
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
+      backgroundImage: `url('/wick.png')`
     };
 
-    if (!isMobile) {
-      divStyle.backgroundImage = `url(${backgroundImage})`;
-    } else {
-      divStyle.backgroundImage = "none";
-      divStyle.width = "unset";
-      divStyle.height = "unset";
-    }
 
     return divStyle;
   };
@@ -121,22 +114,22 @@ function App() {
               <div data-testid='movie-poster_path' key={main.id} style={divStyle}>
                 <div className="check">
                   <div className="main-search">
-                    <i className="fa fa-search search"></i>
+                    <img src="/yagga.png" alt="John wick" className="movie-box" />
                     <input
                       type="text"
-                      placeholder="what movie do you want to watch?"
+                      placeholder="what do you want to watch?"
                       className="search-bar"
                       autoFocus
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                     />
                     <button onClick={handleSubmit} className="active">
-                      {isLoading ? <div className="loading"></div> : "Search"}{" "}
-                      <i className="fa fa-rocket rocket"></i>
+                      {isLoading ? <div className="loading"></div> : <i className="fa fa-search mee"></i>}{" "}
                     </button>
                   </div>
                 </div>
                 <p className="shark" data-testid='movie-title'>{main.title}</p>
+                <p data-testid='movie-overview' className="over">{main.overview}</p>
               </div>
             </>
           ))}

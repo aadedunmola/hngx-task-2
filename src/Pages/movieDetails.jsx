@@ -114,7 +114,7 @@ const MovieDetails = () => {
           )}
           <h2 data-testid='movie-title' className="title">{movieDetails.title}</h2>
           <p className="date">
-            <i data-testid='movie-release-date'> {convertToUTC(movieDetails.release_date)}</i>
+            <i data-testid='movie-release-date'> {movieDetails.release_date}</i>
           </p>
           <p data-testid='movie-runtime' className="date">{movieDetails.runtime}</p>
           <p data-testid='movie-overview' className="overviews">{movieDetails.overview}</p>
