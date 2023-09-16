@@ -59,7 +59,8 @@ function App() {
     fetchNowPlayingMovie();
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     setIsLoading(true);
     try {
       const response = await Api.get(
@@ -112,13 +113,13 @@ function App() {
           {mainMovie?.map((main) => (
             <>
               <div data-testid="movie-poster" key={main.id} style={divStyle}>
-                <div className="check">
-                  <div className="main-search">
-                    <img
-                      src="/yagga.png"
-                      alt="John wick"
-                      className="movie-box"
-                    />
+                <div className="main-search">
+                  <div className="before">
+                    <img src="/yagga.png" className="mates" alt="" />
+                    <img src="/men.png" className="mates" alt="" />
+                  </div>
+                  <img src="/yagga.png" alt="John wick" className="movie-box" />
+                  <form className="rah" onSubmit={(e) => handleSubmit(e)}>
                     <input
                       type="text"
                       placeholder="what do you want to watch?"
@@ -127,27 +128,45 @@ function App() {
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                     />
-                    <button onClick={handleSubmit} className="active">
+                    <button className="active">
                       {isLoading ? (
                         <div className="loading"></div>
                       ) : (
                         <i className="fa fa-search mee"></i>
                       )}{" "}
                     </button>
-                  </div>
+                  </form>
+                  <img src="/men.png" className="movie-box" />
                 </div>
                 <p className="shark" data-testid="movie-title">
-                  {main.title}
+                  John Wick 3 : Parabellum
                 </p>
+                <div className="dimi">
+                  <div className="rates">
+                    <img src="/im.png" alt="logo" />
+                    <p className="pree" data-testid="movie-rating">
+                      {" "}
+                      {main.vote_average}/10
+                    </p>
+                  </div>
+                  <div className="rates">
+                    <img src="/to.png" alt="" />
+                    <p className="pree">0%</p>
+                  </div>
+                </div>
                 <p data-testid="movie-overview" className="over">
                   {main.overview}
                 </p>
+                <div className="watch">
+                  <img src="/play.png" alt="" />
+                  <p className="yaga">WATCH TRAILER</p>
+                </div>
               </div>
             </>
           ))}
         </div>
 
-        {/* {isLoading ? (
+        {isLoading ? (
           <div className="state">
             <h6 className="load-state">Loading</h6>
             <div className="load"></div>
@@ -167,15 +186,15 @@ function App() {
           </>
         ) : (
           <>
-            <h1 className="header">Top Rated Movies:</h1>
+            <h1 className="header">Featured movies</h1>
             <div className="movie-card">
               {topRatedMovies.map((movie) => (
                 <MovieCard key={movie.id} id={movie.id} movie={movie} />
               ))}
             </div>
           </>
-        )} */}
-        {isLoading ? (
+        )}
+        {/* {isLoading ? (
           <div className="state">
             <h6 className="load-state">Loading</h6>
             <div className="load"></div>
@@ -198,7 +217,7 @@ function App() {
               ))}
             </div>
           </>
-        )}
+        )} */}
         <ToastContainer />
       </div>
     </>

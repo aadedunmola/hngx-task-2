@@ -89,7 +89,7 @@ const MovieDetails = () => {
                 src={`https://image.tmdb.org/t/p/w185${movieDetails.poster_path}`}
                 alt={movieDetails.title}
                 className="pic"
-                data-testid="movie-poster"
+                data-testid="movie-posters"
               />
               <i
                 className={`fa fa-heart icon ${isHovered ? "hovered" : ""} ${
@@ -110,13 +110,11 @@ const MovieDetails = () => {
           <h2 data-testid="movie-title" className="title">
             {movieDetails.title}
           </h2>
-          <p className="date">
-            <i data-testid="movie-release-date">
+          <p data-testid="movie-release-date" className="date">
               {movieDetails.release_date}
-            </i>
           </p>
           <p data-testid="movie-runtime" className="date">
-            {movieDetails.runtime} minutes
+            {movieDetails.runtime}
           </p>
           <p data-testid="movie-overview" className="overviews">
             {movieDetails.overview}

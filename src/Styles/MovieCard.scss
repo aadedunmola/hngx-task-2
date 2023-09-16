@@ -22,13 +22,12 @@
 }
 .title {
   color: var(--gray-900, #111827);
-  font-family: "DM Sans";
+  color: var(--gray-900, #111827);
+  font-family: 'DM Sans';
   font-size: 1.125rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin: 0.5rem 0;
-  max-width: 15rem;
   @media (max-width: 950px) {
     font-size: 1rem;
   }
@@ -38,9 +37,9 @@
 }
 .overview {
   margin: 0.7rem 0 0.4rem;
-  font-family: "Kanit";
+  font-family: "DM Sans";
   font-weight: 500;
-  max-width: 22rem;
+  max-width: 18.875rem;
   text-align: justify;
   height: 5.938rem;
   overflow-y: scroll;
@@ -48,7 +47,7 @@
   scrollbar-width: thin;
   scrollbar-color: #888 #f4f4f4;
   width: 100%;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   @media (max-width: 1024px) {
     max-width: 17rem;
   }
@@ -110,11 +109,11 @@
 }
 
 .icon.hovered {
-  color: gold;
+  color: #b01e28;
 }
 
 .icon.clicked {
-  color: gold;
+  color: #b01e28;
 }
 
 .tooltip {
@@ -135,6 +134,7 @@
   }
 }
 .whole {
+  margin: auto;
   padding-left: 1em;
   padding-top: 1em;
   padding-right: 1em;
@@ -156,7 +156,9 @@
   }
 }
 .pic {
-  width: 15.625rem;
+  max-width: 15.625rem;
+  width: 100%;
+  border-radius: 1.25rem;
   height: 23.125rem;
   @media (max-width: 500px) {
     max-width: 30rem;
@@ -168,27 +170,27 @@
   margin: 0.7rem 0 0.4rem;
   font-family: "DM Sans";
   font-weight: 500;
-  max-width: 30rem;
+  max-width: 25.875rem;
   padding-left: 72px;
   color: #fff;
   font-weight: 400;
   text-align: justify;
   width: 100%;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   @media (max-width: 1024px) {
     max-width: 25rem;
     padding-left: 43.2px;
   }
-  @media (max-width: 790px){
+  @media (max-width: 790px) {
     padding-left: 1rem;
   }
-  @media (max-width: 500px){
+  @media (max-width: 500px) {
     display: block;
     padding-left: 1.5rem;
     max-width: 20rem;
     font-size: 0.8rem;
   }
-  @media (max-width: 340px){
+  @media (max-width: 340px) {
     max-width: 17rem;
   }
 }

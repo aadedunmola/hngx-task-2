@@ -38,7 +38,6 @@ function MovieCard({ movie, id }) {
         const storedFavorites =
           JSON.parse(localStorage.getItem("favorites")) || [];
         if (favorite) {
-          toast.success("Added to favourites!📍");
           localStorage.setItem(
             "favorites",
             JSON.stringify([...storedFavorites, movie.id])
@@ -48,7 +47,6 @@ function MovieCard({ movie, id }) {
             (id) => id !== movie.id
           );
           localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-          toast.error("Removed from favorites!");
         }
       })
       .catch((error) => {
@@ -57,9 +55,14 @@ function MovieCard({ movie, id }) {
       });
   };
 
+  const fullReleaseDate = movie.release_date;
+  const releaseYear = new Date(fullReleaseDate).getFullYear();
+
+  
+
   return (
     <>
-      <div  data-testid="movie-card" className="box">
+      <div data-testid="movie-card" className="box">
         <div>
           <Link to={`/movies/${movie.id}`}>
             <img
@@ -84,15 +87,26 @@ function MovieCard({ movie, id }) {
             </span>
           )}
         </div>
+        <h5 className="may">USA, {releaseYear} </h5>
         <h5 data-testid="movie-title" className="title">
           {movie.title}
         </h5>
         {/* <h6 data-testid="movie-overview" className="overview">
           {movie.overview}
         </h6> */}
-        <p className="date">
-          <i data-testid="movie-release-date">{movie.release_date}</i>
-        </p>
+        <div className="moses">
+          <div className="rates">
+            <img src="/im.png" alt="logo" />
+            <p className="prees" data-testid="movie-rating">
+              {" "}
+              {movie.vote_average}/10
+            </p>
+          </div>
+          <div className="rates">
+            <img src="/to.png" alt="" />
+            <p className="prees">0%</p>
+          </div>
+        </div>
         {/* <p data-testid="movie-rating" className="rate">
           {movie.vote_average}
         </p> */}

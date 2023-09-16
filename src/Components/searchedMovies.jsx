@@ -58,6 +58,9 @@ function SearchedMovies({ movie }) {
       });
   };
 
+  const fullReleaseDate = movie.release_date;
+  const releaseYear = new Date(fullReleaseDate).getFullYear();
+
   return (
     <div data-testid='movie-card' key={movie.id} className="box">
       <div>
@@ -84,12 +87,26 @@ function SearchedMovies({ movie }) {
           </span>
         )}
       </div>
+      <h5 className="may">USA, {releaseYear} </h5>
       <h2 data-testid="movie-title" className="title">
         {movie.title}
       </h2>
-      <p className="date">
+      {/* <p className="date">
         <i data-testid="movie-release-date">{movie.release_date}</i>
-      </p>
+      </p> */}
+      <div className="moses">
+          <div className="rates">
+            <img src="/im.png" alt="logo" />
+            <p className="prees" data-testid="movie-rating">
+              {" "}
+              {movie.rating}/10
+            </p>
+          </div>
+          <div className="rates">
+            <img src="/to.png" alt="" />
+            <p className="prees">0%</p>
+          </div>
+        </div>
       {/* <p data-testid="movie-overview" className="overview">
         {movie.overview}
       </p>
