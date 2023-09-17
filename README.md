@@ -32,7 +32,7 @@ Installation:
 
 2. Navigate to the project directory:
 
-" cd 'hngx task two'
+" cd 'hngx task 2'
 
 3. Install the project dependencies:
 
